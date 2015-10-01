@@ -1,0 +1,15 @@
+{
+    "auth": {
+        "api_key": "somekey",
+        "api_secret": "somesecret"
+    },
+    "wait": true,
+    "webp": false,
+    "lossy": false,
+    "resize" : {
+        "width" : 150,
+        "height" : 150,
+        "background" : "rgba(100, 100, 100, 1)",
+        "strategy" : "fill"
+    }
+}
