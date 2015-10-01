@@ -1,0 +1,11 @@
+{
+    "auth": {
+        "api_key": "somekey",
+        "api_secret": "somesecret"
+    },
+    "wait": false,
+    "webp": false,
+    "lossy": false,
+    "callback_url" : "http://somehost/somecallback",
+    "url": "http://somehost/image"
+}

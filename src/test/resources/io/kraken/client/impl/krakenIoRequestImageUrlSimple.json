@@ -1,0 +1,10 @@
+{
+    "auth": {
+        "api_key": "somekey",
+        "api_secret": "somesecret"
+    },
+    "wait": true,
+    "webp": false,
+    "lossy": false,
+    "url": "http://somehost/image"
+}
