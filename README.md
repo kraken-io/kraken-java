@@ -8,7 +8,16 @@ Kraken.io's API includes image resizing, in addition to its core optimization fu
 
 **Kraken.io is trusted by thousands of customers worldwide, from individuals to small/medium sized businesses and even Fortune 500 companies.**
 
+## Benefits of image optimization
+In nutshell, faster loading sites are viewed more favourably than slower loading sites by both users and search engines. Getting your site to load faster can go a long way to improving your business's bottom line. For more information, visit our [Support Center](https://support.kraken.io/).
+
+Got a question? Need some help? Get in touch with Kraken.io support, which is easily visible when logged in to Kraken.io.
+
+
+## Kraken.io is more than just an API
 For our complete list of API functionality, integration modules, third party plugins, and more, please visit our [official documentation website](https://kraken.io/docs/getting-started).
+
+You can try us out by creating a [free account](https://kraken.io/signup) and/or visiting out our [Free Web Interface](https://kraken.io/web-interface).
 
 ## Compatibility
 - Java 6+
