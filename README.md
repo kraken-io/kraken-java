@@ -1,5 +1,15 @@
 # Kraken.io java client
 
+## Introduction
+Kraken.io's image optimization API provides advanced optimization for your Magento JPEG, PNG, GIF and SVG images.
+Established in 2012, Kraken.io is an industry-leading image optimizer like no other capable of significantly reducing the file size of popular image formats using tried-and-tested optimization techniques developed with a single goal in mind: To reduce their file size by as much as possible while retaining the image quality.
+
+Kraken.io's API includes image resizing, in addition to its core optimization functionality, for those who need to resize their images prior to optimization.
+
+**Kraken.io is trusted by thousands of customers worldwide, from individuals to small/medium sized businesses and even Fortune 500 companies.**
+
+For our complete list of API functionality, integration modules, third party plugins, and more, please visit our [official documentation website](https://kraken.io/docs/getting-started).
+
 ## Compatibility
 - Java 6+
 
@@ -130,5 +140,12 @@ Name                | Description
       final FailedUploadResponse failedUploadResponse = e.getFailedUploadResponse();
   }
 ```
+
+Contribution
+------------
+
+Any contributions are highly appreciated. The best way to contribute code is to open a
+[pull request on GitHub](https://help.github.com/articles/using-pull-requests).
+
 ## License
 Apache License, Version 2.0
