@@ -23,7 +23,6 @@ import io.kraken.client.model.resize.AbstractResize;
 import java.net.URL;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -35,14 +34,15 @@ public abstract class AbstractUploadCallbackUrlRequest extends AbstractUploadReq
     @JsonProperty("callback_url")
     private final URL callbackUrl;
 
-    protected AbstractUploadCallbackUrlRequest(Boolean webp,
+    protected AbstractUploadCallbackUrlRequest(Boolean dev,
+                                               Boolean webp,
                                                Boolean lossy,
                                                Integer quality,
                                                AbstractResize resize,
                                                Set<Metadata> preserveMeta,
                                                Convert convert,
                                                URL callbackUrl) {
-        super(false, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, false, webp, lossy, quality, resize, preserveMeta, convert);
 
         checkNotNull(callbackUrl, "callbackUrl must not be null");
         this.callbackUrl = callbackUrl;

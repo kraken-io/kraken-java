@@ -16,7 +16,6 @@
 package io.kraken.client.model.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.kraken.client.model.Convert;
 import io.kraken.client.model.Metadata;
 import io.kraken.client.model.resize.AbstractResize;
@@ -36,7 +35,8 @@ public class DirectUploadCallbackUrlRequest extends AbstractUploadCallbackUrlReq
     @JsonIgnore
     private final InputStream image;
 
-    private DirectUploadCallbackUrlRequest(Boolean webp,
+    private DirectUploadCallbackUrlRequest(Boolean dev,
+                                           Boolean webp,
                                            Boolean lossy,
                                            Integer quality,
                                            AbstractResize resize,
@@ -44,7 +44,7 @@ public class DirectUploadCallbackUrlRequest extends AbstractUploadCallbackUrlReq
                                            Convert convert,
                                            URL callbackUrl,
                                            InputStream image) {
-        super(webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
+        super(dev, webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
 
         checkNotNull(image, "image must not be null");
         this.image = image;
@@ -68,6 +68,7 @@ public class DirectUploadCallbackUrlRequest extends AbstractUploadCallbackUrlReq
 
         public DirectUploadCallbackUrlRequest build() {
             return new DirectUploadCallbackUrlRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,

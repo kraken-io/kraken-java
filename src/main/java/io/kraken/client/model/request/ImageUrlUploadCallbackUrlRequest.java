@@ -34,7 +34,8 @@ public class ImageUrlUploadCallbackUrlRequest extends AbstractUploadCallbackUrlR
     @JsonProperty("url")
     private final URL imageUrl;
 
-    private ImageUrlUploadCallbackUrlRequest(Boolean webp,
+    private ImageUrlUploadCallbackUrlRequest(Boolean dev,
+                                             Boolean webp,
                                              Boolean lossy,
                                              Integer quality,
                                              AbstractResize resize,
@@ -42,7 +43,7 @@ public class ImageUrlUploadCallbackUrlRequest extends AbstractUploadCallbackUrlR
                                              Convert convert,
                                              URL callbackUrl,
                                              URL imageUrl) {
-        super(webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
+        super(dev, webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
 
         checkNotNull(imageUrl, "imageUrl must not be null");
         this.imageUrl = imageUrl;
@@ -66,6 +67,7 @@ public class ImageUrlUploadCallbackUrlRequest extends AbstractUploadCallbackUrlR
 
         public ImageUrlUploadCallbackUrlRequest build() {
             return new ImageUrlUploadCallbackUrlRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,

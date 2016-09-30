@@ -30,7 +30,6 @@ import io.kraken.client.model.response.AbstractUploadResponse;
 import io.kraken.client.model.response.FailedUploadResponse;
 import io.kraken.client.model.response.SuccessfulUploadCallbackUrlResponse;
 import io.kraken.client.model.response.SuccessfulUploadResponse;
-import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
@@ -44,7 +43,6 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.text.MessageFormat;
 import java.util.UUID;
 

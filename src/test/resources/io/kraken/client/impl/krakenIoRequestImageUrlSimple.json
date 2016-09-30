@@ -3,6 +3,7 @@
         "api_key": "somekey",
         "api_secret": "somesecret"
     },
+    "dev": false,
     "wait": true,
     "webp": false,
     "lossy": false,

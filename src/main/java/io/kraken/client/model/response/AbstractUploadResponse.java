@@ -16,6 +16,7 @@
 package io.kraken.client.model.response;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Emir Dizdarevic
@@ -27,6 +28,9 @@ import com.fasterxml.jackson.annotation.*;
         @JsonSubTypes.Type(value = FailedUploadResponse.class, name = "false")
 })
 public abstract class AbstractUploadResponse {
+
+    @JsonIgnore
+    protected final ObjectMapper objectMapper = new ObjectMapper();
 
     private final Boolean success;
 

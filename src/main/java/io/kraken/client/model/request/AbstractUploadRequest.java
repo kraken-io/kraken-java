@@ -21,8 +21,6 @@ import io.kraken.client.model.Convert;
 import io.kraken.client.model.Metadata;
 import io.kraken.client.model.resize.AbstractResize;
 
-import java.net.URL;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +33,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public abstract class AbstractUploadRequest {
 
+    private final Boolean dev;
     private final Boolean wait;
     private final Boolean webp;
     private final Boolean lossy;
@@ -45,18 +44,21 @@ public abstract class AbstractUploadRequest {
     private final Convert convert;
 
     @JsonCreator
-    protected AbstractUploadRequest(Boolean wait,
+    protected AbstractUploadRequest(Boolean dev,
+                                    Boolean wait,
                                     Boolean webp,
                                     Boolean lossy,
                                     Integer quality,
                                     AbstractResize resize,
                                     Set<Metadata> preserveMeta,
                                     Convert convert) {
+        checkNotNull(dev, "dev must not be null");
         checkNotNull(wait, "wait must not be null");
         checkNotNull(lossy, "lossy must not be null");
         checkArgument(quality == null || (quality != null && quality >= 1 && quality <= 100), "quality must be between 1-100");
         checkArgument(lossy != null || (lossy == null && quality == null), "quality can only be set if lossy is set");
 
+        this.dev = dev;
         this.wait = wait;
         this.webp = webp;
         this.lossy = lossy;
@@ -64,6 +66,10 @@ public abstract class AbstractUploadRequest {
         this.resize = resize;
         this.preserveMeta = preserveMeta;
         this.convert = convert;
+    }
+
+    public Boolean getDev() {
+        return dev;
     }
 
     public Boolean getWait() {
@@ -97,6 +103,7 @@ public abstract class AbstractUploadRequest {
     protected static class Builder<T extends Builder> {
         protected final Class<T> clazz;
 
+        protected Boolean dev = false;
         protected Boolean webp = false;
         protected Boolean lossy = false;
         protected Integer quality;
@@ -114,6 +121,11 @@ public abstract class AbstractUploadRequest {
                 this.quality = null;
             }
 
+            return clazz.cast(this);
+        }
+
+        public T withDev(boolean dev) {
+            this.dev = dev;
             return clazz.cast(this);
         }
 

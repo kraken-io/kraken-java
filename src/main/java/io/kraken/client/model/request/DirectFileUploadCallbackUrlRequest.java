@@ -35,7 +35,8 @@ public class DirectFileUploadCallbackUrlRequest extends AbstractUploadCallbackUr
     @JsonIgnore
     private final File image;
 
-    private DirectFileUploadCallbackUrlRequest(Boolean webp,
+    private DirectFileUploadCallbackUrlRequest(Boolean dev,
+                                               Boolean webp,
                                                Boolean lossy,
                                                Integer quality,
                                                AbstractResize resize,
@@ -43,7 +44,7 @@ public class DirectFileUploadCallbackUrlRequest extends AbstractUploadCallbackUr
                                                Convert convert,
                                                URL callbackUrl,
                                                File image) {
-        super(webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
+        super(dev, webp, lossy, quality, resize, preserveMeta, convert, callbackUrl);
 
         checkNotNull(image, "image must not be null");
         this.image = image;
@@ -67,6 +68,7 @@ public class DirectFileUploadCallbackUrlRequest extends AbstractUploadCallbackUr
 
         public DirectFileUploadCallbackUrlRequest build() {
             return new DirectFileUploadCallbackUrlRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,

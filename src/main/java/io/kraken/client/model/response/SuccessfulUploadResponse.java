@@ -17,6 +17,7 @@ package io.kraken.client.model.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  * @author Emir Dizdarevic
@@ -63,5 +64,22 @@ public class SuccessfulUploadResponse extends AbstractUploadResponse {
 
     public String getKrakedUrl() {
         return krakedUrl;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return "AbstractUploadResponse:" + objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return "SuccessfulUploadResponse{" +
+                    "success='" + getSuccess() + '\'' +
+                    ", status='" + getStatus() + '\'' +
+                    ", fileName='" + getFileName() + '\'' +
+                    ", originalSize=" + getOriginalSize() +
+                    ", krakedSize=" + getKrakedSize() +
+                    ", savedBytes=" + getSavedBytes() +
+                    ", krakedUrl='" + getKrakedUrl() + '\'' +
+                    '}';
+        }
     }
 }
