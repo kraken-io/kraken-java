@@ -16,13 +16,19 @@
 package io.kraken.client.model.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Emir Dizdarevic
  * @since 1.0.0
  */
 public class SuccessfulUploadCallbackUrlResponse {
+
+    @JsonIgnore
+    protected final ObjectMapper objectMapper = new ObjectMapper();
 
     private final String id;
 
@@ -33,5 +39,16 @@ public class SuccessfulUploadCallbackUrlResponse {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return "AbstractUploadResponse:" + objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            return "SuccessfulUploadCallbackUrlResponse{" +
+                    "id='" + id + '\'' +
+                    '}';
+        }
     }
 }

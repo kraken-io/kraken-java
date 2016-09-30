@@ -21,7 +21,6 @@ import io.kraken.client.model.Metadata;
 import io.kraken.client.model.resize.AbstractResize;
 
 import java.io.File;
-import java.net.URL;
 import java.util.Set;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -35,14 +34,15 @@ public class DirectFileUploadRequest extends AbstractUploadRequest {
     @JsonIgnore
     private final File image;
 
-    private DirectFileUploadRequest(Boolean webp,
+    private DirectFileUploadRequest(Boolean dev,
+                                    Boolean webp,
                                     Boolean lossy,
                                     Integer quality,
                                     AbstractResize resize,
                                     Set<Metadata> preserveMeta,
                                     Convert convert,
                                     File image) {
-        super(true, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
 
         checkNotNull(image, "image must not be null");
         this.image = image;
@@ -66,6 +66,7 @@ public class DirectFileUploadRequest extends AbstractUploadRequest {
 
         public DirectFileUploadRequest build() {
             return new DirectFileUploadRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,

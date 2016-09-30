@@ -16,16 +16,13 @@
 package io.kraken.client.model.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.kraken.client.model.Convert;
 import io.kraken.client.model.Metadata;
 import io.kraken.client.model.resize.AbstractResize;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -37,14 +34,15 @@ public class DirectUploadRequest extends AbstractUploadRequest {
     @JsonIgnore
     private final InputStream image;
 
-    private DirectUploadRequest(Boolean webp,
+    private DirectUploadRequest(Boolean dev,
+                                Boolean webp,
                                 Boolean lossy,
                                 Integer quality,
                                 AbstractResize resize,
                                 Set<Metadata> preserveMeta,
                                 Convert convert,
                                 InputStream image) {
-        super(true, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
 
         checkNotNull(image, "image must not be null");
         this.image = image;
@@ -68,6 +66,7 @@ public class DirectUploadRequest extends AbstractUploadRequest {
 
         public DirectUploadRequest build() {
             return new DirectUploadRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,

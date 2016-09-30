@@ -46,6 +46,6 @@ public class ManualTest {
                 .build();
 
         final SuccessfulUploadResponse successfulUploadResponse = krakenIoClient.directUpload(directFileUploadRequest);
-        System.out.println(successfulUploadResponse.getKrakedUrl());
+        System.out.println(successfulUploadResponse);
     }
 }

@@ -34,14 +34,15 @@ public class ImageUrlUploadRequest extends AbstractUploadRequest {
     @JsonProperty("url")
     private final URL imageUrl;
 
-    private ImageUrlUploadRequest(Boolean webp,
+    private ImageUrlUploadRequest(Boolean dev,
+                                  Boolean webp,
                                   Boolean lossy,
                                   Integer quality,
                                   AbstractResize resize,
                                   Set<Metadata> preserveMeta,
                                   Convert convert,
                                   URL imageUrl) {
-        super(true, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
 
         checkNotNull(imageUrl, "imageUrl must not be null");
         this.imageUrl = imageUrl;
@@ -65,6 +66,7 @@ public class ImageUrlUploadRequest extends AbstractUploadRequest {
 
         public ImageUrlUploadRequest build() {
             return new ImageUrlUploadRequest(
+                    dev,
                     webp,
                     lossy,
                     quality,
