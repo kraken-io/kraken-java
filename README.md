@@ -150,6 +150,22 @@ Name                | Description
   }
 ```
 
+### Access the API Sandbox
+```java
+  final FillResize fillResize = new FillResize(150, 150, new RGBA(100, 100, 100, BigDecimal.ONE));
+  final DirectUploadRequest directUploadRequest = DirectUploadRequest.builder(
+    new ByteArrayInputStream(loadFileBinary("test.jpg"))
+  )
+  .withDev(true) // Sandbox mode
+  .build();
+
+  try {
+      final SuccessfulUploadResponse successfulUploadResponse = krakenIoClient.directUpload(directUploadRequest);
+  } catch(KrakenIoRequestException e) {
+      final FailedUploadResponse failedUploadResponse = e.getFailedUploadResponse();
+  }
+```
+
 Contribution
 ------------
 
