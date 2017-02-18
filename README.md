@@ -29,7 +29,7 @@ You can try us out by creating a [free account](https://kraken.io/signup) and/or
 <dependency>
     <groupId>io.kraken.client</groupId>
     <artifactId>client</artifactId>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
