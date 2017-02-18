@@ -19,6 +19,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
+import org.slf4j.bridge.SLF4JBridgeHandler;
+
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 /**
  * @author Emir Dizdarevic
@@ -27,6 +32,13 @@ import org.mockserver.integration.ClientAndServer;
 public abstract class AbstractFunctionalTest {
 
     private static MockServerClient mockServerClient;
+
+    static {
+        LogManager.getLogManager().reset();
+        SLF4JBridgeHandler.removeHandlersForRootLogger();
+        SLF4JBridgeHandler.install();
+        Logger.getLogger("global").setLevel(Level.FINEST);
+    }
 
     @BeforeClass
     public static final void initClass() throws Exception {

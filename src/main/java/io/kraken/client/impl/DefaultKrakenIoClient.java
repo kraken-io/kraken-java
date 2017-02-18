@@ -30,21 +30,28 @@ import io.kraken.client.model.response.AbstractUploadResponse;
 import io.kraken.client.model.response.FailedUploadResponse;
 import io.kraken.client.model.response.SuccessfulUploadCallbackUrlResponse;
 import io.kraken.client.model.response.SuccessfulUploadResponse;
+import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
+import org.glassfish.jersey.logging.LoggingFeature;
 import org.glassfish.jersey.media.multipart.BodyPart;
 import org.glassfish.jersey.media.multipart.FormDataBodyPart;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Feature;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.text.MessageFormat;
 import java.util.UUID;
+import java.util.logging.Level;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -55,13 +62,16 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class DefaultKrakenIoClient implements KrakenIoClient {
 
+    private static final java.util.logging.Logger JERSEY_LOGGER = java.util.logging.Logger.getLogger(DefaultKrakenIoClient.class.getCanonicalName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultKrakenIoClient.class);
+
     private static final String DEFAULT_BASE_URL = "https://api.kraken.io";
     private static final String DIRECT_UPLOAD_ENDPOINT = "{0}/v1/upload";
     private static final String IMAGE_URL_ENDPOINT = "{0}/v1/url";
     private static final String DATA_PART = "data";
     private static final String UPLOAD_PART = "upload";
 
-    private final javax.ws.rs.client.Client jerseyClient;
+    private final javax.ws.rs.client.Client client;
     private final String apiKey;
     private final String apiSecret;
     private final String directUploadUrl;
@@ -71,7 +81,7 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
         this(apiKey, apiSecret, DEFAULT_BASE_URL);
     }
 
-    DefaultKrakenIoClient(String apiKey, String apiSecret, String baseUrl) {
+    public DefaultKrakenIoClient(String apiKey, String apiSecret, String baseUrl) {
         checkNotNull(apiKey, "apiKey must not be null");
         checkArgument(!apiKey.isEmpty(), "apiKey must not be empty");
         checkNotNull(apiSecret, "apiSecret must not be null");
@@ -83,12 +93,21 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
         this.apiSecret = apiSecret;
         this.directUploadUrl = MessageFormat.format(DIRECT_UPLOAD_ENDPOINT, baseUrl);
         this.imageUrl = MessageFormat.format(IMAGE_URL_ENDPOINT, baseUrl);
-        this.jerseyClient = createClient();
+        this.client = createClient(createObjectMapper());
     }
 
-    private Client createClient() {
-        final JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider(createObjectMapper());
-        return ClientBuilder.newClient().register(jacksonJsonProvider).register(MultiPartFeature.class);
+    private Client createClient(ObjectMapper objectMapper) {
+        final ClientConfig clientConfig = new ClientConfig();
+        clientConfig.property(ClientProperties.FOLLOW_REDIRECTS, true);
+        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, 3000);
+        clientConfig.property(ClientProperties.READ_TIMEOUT, 3000);
+        clientConfig.property(ClientProperties.FEATURE_AUTO_DISCOVERY_DISABLE, true);
+
+        final JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider(objectMapper);
+        final Client client = ClientBuilder.newClient(clientConfig).register(jacksonJsonProvider).register(MultiPartFeature.class);
+        final Feature feature = new LoggingFeature(JERSEY_LOGGER, Level.FINE, LoggingFeature.Verbosity.PAYLOAD_ANY, null);
+        client.register(feature);
+        return client;
     }
 
     private ObjectMapper createObjectMapper() {
@@ -116,7 +135,7 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
 
     @Override
     public SuccessfulUploadResponse imageUrlUpload(ImageUrlUploadRequest imageUrlUploadRequest) {
-        final WebTarget webTarget = jerseyClient.target(imageUrl);
+        final WebTarget webTarget = client.target(imageUrl);
         final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(wrapAuth(imageUrlUploadRequest), MediaType.APPLICATION_JSON_TYPE));
         return handleResponse(response);
     }
@@ -133,7 +152,7 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
 
     @Override
     public SuccessfulUploadCallbackUrlResponse imageUrlUpload(ImageUrlUploadCallbackUrlRequest imageUrlUploadCallbackUrlRequest) {
-        final WebTarget webTarget = jerseyClient.target(imageUrl);
+        final WebTarget webTarget = client.target(imageUrl);
         final Response response = webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(wrapAuth(imageUrlUploadCallbackUrlRequest), MediaType.APPLICATION_JSON_TYPE));
         return handleCallbackUrlResponse(response);
     }
@@ -151,13 +170,13 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
     }
 
     private Response handleRequest(AbstractUploadRequest abstractUploadRequest, BodyPart bodyPart) {
-        final WebTarget webTarget = jerseyClient.target(directUploadUrl);
+        final WebTarget webTarget = client.target(directUploadUrl);
 
         final MultiPart multiPart = new MultiPart();
         multiPart.setMediaType(MediaType.MULTIPART_FORM_DATA_TYPE);
 
-        multiPart.bodyPart(bodyPart);
         multiPart.bodyPart(new FormDataBodyPart(DATA_PART, wrapAuth(abstractUploadRequest), MediaType.APPLICATION_JSON_TYPE));
+        multiPart.bodyPart(bodyPart);
 
         return webTarget.request(MediaType.APPLICATION_JSON_TYPE).post(Entity.entity(multiPart, multiPart.getMediaType()));
     }
@@ -167,7 +186,7 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
             final AbstractUploadResponse abstractUploadResponse = response.readEntity(AbstractUploadResponse.class);
             abstractUploadResponse.setStatus(response.getStatus());
 
-            if(response.getStatus() == 200) {
+            if (response.getStatus() == 200) {
                 return (SuccessfulUploadResponse) abstractUploadResponse;
             } else {
                 throw new KrakenIoRequestException("Kraken.io request failed", (FailedUploadResponse) abstractUploadResponse);
@@ -181,7 +200,7 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
 
     private SuccessfulUploadCallbackUrlResponse handleCallbackUrlResponse(Response response) {
         try {
-            if(response.getStatus() == 200) {
+            if (response.getStatus() == 200) {
                 return response.readEntity(SuccessfulUploadCallbackUrlResponse.class);
             } else {
                 final FailedUploadResponse failedUploadResponse = response.readEntity(FailedUploadResponse.class);

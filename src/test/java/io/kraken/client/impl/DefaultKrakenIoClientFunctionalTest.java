@@ -113,16 +113,16 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         final ByteArrayOutputStream image = new ByteArrayOutputStream();
         final ByteArrayOutputStream request = new ByteArrayOutputStream();
 
-        final String imageHeaders = multipartStream.readHeaders();
-        multipartStream.readBodyData(image);
-        multipartStream.readBoundary();
-
         final String requestHeaders = multipartStream.readHeaders();
         multipartStream.readBodyData(request);
         multipartStream.readBoundary();
 
-        assertThat(imageHeaders, containsString("filename="));
+        final String imageHeaders = multipartStream.readHeaders();
+        multipartStream.readBodyData(image);
+        multipartStream.readBoundary();
+
         assertThat(requestHeaders, containsString("Content-Type: application/json"));
+        assertThat(imageHeaders, containsString("filename="));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
         assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
@@ -176,17 +176,17 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         final ByteArrayOutputStream image = new ByteArrayOutputStream();
         final ByteArrayOutputStream request = new ByteArrayOutputStream();
 
-        final String imageHeaders = multipartStream.readHeaders();
-        multipartStream.readBodyData(image);
-        multipartStream.readBoundary();
-
         final String requestHeaders = multipartStream.readHeaders();
         multipartStream.readBodyData(request);
         multipartStream.readBoundary();
 
+        final String imageHeaders = multipartStream.readHeaders();
+        multipartStream.readBodyData(image);
+        multipartStream.readBoundary();
+
+        assertThat(requestHeaders, containsString("Content-Type: application/json"));
         assertThat(imageHeaders, containsString("filename=\"test.jpg\""));
         assertThat(imageHeaders, containsString("Content-Type: image/jpeg"));
-        assertThat(requestHeaders, containsString("Content-Type: application/json"));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
         assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
@@ -235,16 +235,16 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         final ByteArrayOutputStream image = new ByteArrayOutputStream();
         final ByteArrayOutputStream request = new ByteArrayOutputStream();
 
-        final String imageHeaders = multipartStream.readHeaders();
-        multipartStream.readBodyData(image);
-        multipartStream.readBoundary();
-
         final String requestHeaders = multipartStream.readHeaders();
         multipartStream.readBodyData(request);
         multipartStream.readBoundary();
 
-        assertThat(imageHeaders, containsString("filename="));
+        final String imageHeaders = multipartStream.readHeaders();
+        multipartStream.readBodyData(image);
+        multipartStream.readBoundary();
+
         assertThat(requestHeaders, containsString("Content-Type: application/json"));
+        assertThat(imageHeaders, containsString("filename="));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
         assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
