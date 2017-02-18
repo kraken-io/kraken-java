@@ -54,13 +54,9 @@ public abstract class AbstractUploadCallbackUrlRequest extends AbstractUploadReq
 
     protected static class Builder<T extends Builder> extends AbstractUploadRequest.Builder<T> {
 
-        private final Class<T> clazz;
         protected final URL callbackUrl;
 
-        protected Builder(Class<T> clazz, URL callbackUrl) {
-            super(clazz);
-
-            this.clazz = clazz;
+        protected Builder(URL callbackUrl) {
             this.callbackUrl = callbackUrl;
         }
     }

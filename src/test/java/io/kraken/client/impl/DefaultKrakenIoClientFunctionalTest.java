@@ -42,6 +42,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.javacrumbs.jsonunit.JsonMatchers.jsonEquals;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockserver.model.HttpRequest.request;
@@ -123,7 +124,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         assertThat(imageHeaders, containsString("filename="));
         assertThat(requestHeaders, containsString("Content-Type: application/json"));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
-        assertThat(new String(request.toByteArray(), Charsets.UTF_8).replaceAll("\\s", ""), is(requestJson.replaceAll("\\s", "")));
+        assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
 
     @Test
@@ -187,7 +188,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         assertThat(imageHeaders, containsString("Content-Type: image/jpeg"));
         assertThat(requestHeaders, containsString("Content-Type: application/json"));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
-        assertThat(new String(request.toByteArray(), Charsets.UTF_8).replaceAll("\\s", ""), is(requestJson.replaceAll("\\s", "")));
+        assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
 
     @Test
@@ -245,7 +246,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
         assertThat(imageHeaders, containsString("filename="));
         assertThat(requestHeaders, containsString("Content-Type: application/json"));
         assertThat(image.toByteArray(), is(loadFileBinary("test.jpg")));
-        assertThat(new String(request.toByteArray(), Charsets.UTF_8).replaceAll("\\s", ""), is(requestJson.replaceAll("\\s", "")));
+        assertThat(new String(request.toByteArray(), Charsets.UTF_8), jsonEquals(requestJson));
     }
 
     @Test
@@ -292,7 +293,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
 
         assertThat(Arrays.asList(expectations), hasSize(1));
         assertThat(expectations[0].getHttpRequest().getFirstHeader("Content-Type"), is("application/json"));
-        assertThat(new String(expectations[0].getHttpRequest().getBody().getRawBytes(), Charsets.UTF_8).replaceAll("\\s", ""), is(requestJson.replaceAll("\\s", "")));
+        assertThat(new String(expectations[0].getHttpRequest().getBody().getRawBytes(), Charsets.UTF_8), jsonEquals(requestJson));
     }
 
     @Test
@@ -338,7 +339,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
 
         assertThat(Arrays.asList(expectations), hasSize(1));
         assertThat(expectations[0].getHttpRequest().getFirstHeader("Content-Type"), is("application/json"));
-        assertThat(new String(expectations[0].getHttpRequest().getBody().getRawBytes(), Charsets.UTF_8).replaceAll("\\s", ""), is(requestJson.replaceAll("\\s", "")));
+        assertThat(new String(expectations[0].getHttpRequest().getBody().getRawBytes(), Charsets.UTF_8), jsonEquals(requestJson));
     }
 
     @Test

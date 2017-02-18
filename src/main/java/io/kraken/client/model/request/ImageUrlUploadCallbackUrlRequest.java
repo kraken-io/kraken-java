@@ -61,7 +61,7 @@ public class ImageUrlUploadCallbackUrlRequest extends AbstractUploadCallbackUrlR
         private final URL imageUrl;
 
         private Builder(URL imageUrl, URL callbackUrl) {
-            super(Builder.class, callbackUrl);
+            super(callbackUrl);
             this.imageUrl = imageUrl;
         }
 

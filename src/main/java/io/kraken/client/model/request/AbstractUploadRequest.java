@@ -101,8 +101,6 @@ public abstract class AbstractUploadRequest {
     }
 
     protected static class Builder<T extends Builder> {
-        protected final Class<T> clazz;
-
         protected Boolean dev = false;
         protected Boolean webp = false;
         protected Boolean lossy = false;
@@ -111,48 +109,44 @@ public abstract class AbstractUploadRequest {
         protected Set<Metadata> preserveMeta = new HashSet<Metadata>();
         protected Convert convert;
 
-        public Builder(Class<T> clazz) {
-            this.clazz = clazz;
-        }
-
         public T withLossy(boolean lossy) {
             this.lossy = lossy;
             if (lossy == false) {
                 this.quality = null;
             }
 
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withDev(boolean dev) {
             this.dev = dev;
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withWebp(boolean webp) {
             this.webp = webp;
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withQuality(int quality) {
             this.lossy = true;
             this.quality = quality;
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withResize(AbstractResize resize) {
             this.resize = resize;
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withPreserveMeta(Metadata metadata) {
             preserveMeta.add(metadata);
-            return clazz.cast(this);
+            return (T) this;
         }
 
         public T withConvert(Convert convert) {
             this.convert = convert;
-            return clazz.cast(this);
+            return (T) this;
         }
     }
 }

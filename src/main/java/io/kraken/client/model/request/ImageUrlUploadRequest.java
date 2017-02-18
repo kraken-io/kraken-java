@@ -60,7 +60,6 @@ public class ImageUrlUploadRequest extends AbstractUploadRequest {
         private final URL imageUrl;
 
         private Builder(URL imageUrl) {
-            super(Builder.class);
             this.imageUrl = imageUrl;
         }
 

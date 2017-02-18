@@ -62,7 +62,7 @@ public class DirectFileUploadCallbackUrlRequest extends AbstractUploadCallbackUr
         private final File image;
 
         private Builder(File image, URL callbackUrl) {
-            super(Builder.class, callbackUrl);
+            super(callbackUrl);
             this.image = image;
         }
 

@@ -60,7 +60,6 @@ public class DirectUploadRequest extends AbstractUploadRequest {
         private final InputStream image;
 
         private Builder(InputStream image) {
-            super(Builder.class);
             this.image = image;
         }
 
