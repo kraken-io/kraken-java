@@ -42,6 +42,8 @@ public abstract class AbstractUploadRequest {
     @JsonProperty("preserve_meta")
     private final Set<Metadata> preserveMeta;
     private final Convert convert;
+    @JsonProperty("auto_orient")
+    private final Boolean autoOrient;
 
     @JsonCreator
     protected AbstractUploadRequest(Boolean dev,
@@ -51,7 +53,8 @@ public abstract class AbstractUploadRequest {
                                     Integer quality,
                                     AbstractResize resize,
                                     Set<Metadata> preserveMeta,
-                                    Convert convert) {
+                                    Convert convert,
+                                    Boolean autoOrient) {
         checkNotNull(dev, "dev must not be null");
         checkNotNull(wait, "wait must not be null");
         checkNotNull(lossy, "lossy must not be null");
@@ -66,6 +69,7 @@ public abstract class AbstractUploadRequest {
         this.resize = resize;
         this.preserveMeta = preserveMeta;
         this.convert = convert;
+        this.autoOrient = autoOrient;
     }
 
     public Boolean getDev() {
@@ -108,6 +112,7 @@ public abstract class AbstractUploadRequest {
         protected AbstractResize resize;
         protected Set<Metadata> preserveMeta = new HashSet<Metadata>();
         protected Convert convert;
+        protected Boolean autoOrient = false;
 
         public T withLossy(boolean lossy) {
             this.lossy = lossy;
@@ -147,6 +152,11 @@ public abstract class AbstractUploadRequest {
         public T withConvert(Convert convert) {
             this.convert = convert;
             return (T) this;
+        }
+        
+        public T withAutoOrient(boolean autoOrient) {
+        	this.autoOrient = autoOrient;
+        	return (T) this;
         }
     }
 }

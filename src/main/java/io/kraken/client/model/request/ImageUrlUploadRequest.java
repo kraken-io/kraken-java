@@ -41,8 +41,9 @@ public class ImageUrlUploadRequest extends AbstractUploadRequest {
                                   AbstractResize resize,
                                   Set<Metadata> preserveMeta,
                                   Convert convert,
-                                  URL imageUrl) {
-        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
+                                  URL imageUrl,
+                                  Boolean autoOrient) {
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert, autoOrient);
 
         checkNotNull(imageUrl, "imageUrl must not be null");
         this.imageUrl = imageUrl;
@@ -72,7 +73,8 @@ public class ImageUrlUploadRequest extends AbstractUploadRequest {
                     resize,
                     preserveMeta,
                     convert,
-                    imageUrl
+                    imageUrl,
+                    autoOrient
             );
         }
     }

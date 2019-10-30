@@ -41,8 +41,9 @@ public class DirectUploadRequest extends AbstractUploadRequest {
                                 AbstractResize resize,
                                 Set<Metadata> preserveMeta,
                                 Convert convert,
-                                InputStream image) {
-        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
+                                InputStream image,
+                                Boolean autoOrient) {
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert, autoOrient);
 
         checkNotNull(image, "image must not be null");
         this.image = image;
@@ -72,7 +73,8 @@ public class DirectUploadRequest extends AbstractUploadRequest {
                     resize,
                     preserveMeta,
                     convert,
-                    image
+                    image,
+                    autoOrient
             );
         }
     }
