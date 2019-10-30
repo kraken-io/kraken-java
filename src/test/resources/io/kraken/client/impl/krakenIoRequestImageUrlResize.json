@@ -13,5 +13,6 @@
         "background" : "rgba(100, 100, 100, 1)",
         "strategy" : "fill"
     },
-    "url": "http://somehost/image"
+    "url": "http://somehost/image",
+    "auto_orient": false
 }

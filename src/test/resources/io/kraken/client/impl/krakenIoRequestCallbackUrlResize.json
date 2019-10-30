@@ -14,5 +14,6 @@
         "strategy" : "fill"
     },
     "callback_url" : "http://somehost/somecallback",
-    "url": "http://somehost/image"
+    "url": "http://somehost/image",
+    "auto_orient": false
 }
