@@ -42,7 +42,7 @@ public class DirectFileUploadRequest extends AbstractUploadRequest {
                                     Set<Metadata> preserveMeta,
                                     Convert convert,
                                     File image) {
-        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, true, webp, lossy, quality, resize, preserveMeta, convert, false);
 
         checkNotNull(image, "image must not be null");
         this.image = image;

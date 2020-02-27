@@ -7,5 +7,6 @@
     "wait": false,
     "webp": false,
     "lossy": false,
-    "callback_url" : "http://somehost/somecallback"
+    "callback_url" : "http://somehost/somecallback",
+    "auto_orient": false
 }

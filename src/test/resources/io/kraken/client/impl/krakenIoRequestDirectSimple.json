@@ -6,5 +6,6 @@
     "dev": false,
     "wait": true,
     "webp": false,
-    "lossy": false
+    "lossy": false,
+    "auto_orient": false
 }

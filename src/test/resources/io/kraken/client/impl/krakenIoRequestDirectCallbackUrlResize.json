@@ -13,5 +13,6 @@
         "background" : "rgba(100, 100, 100, 1)",
         "strategy" : "fill"
     },
-    "callback_url" : "http://somehost/somecallback"
+    "callback_url" : "http://somehost/somecallback",
+    "auto_orient": false
 }

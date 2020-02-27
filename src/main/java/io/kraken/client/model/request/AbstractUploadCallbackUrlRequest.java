@@ -42,7 +42,7 @@ public abstract class AbstractUploadCallbackUrlRequest extends AbstractUploadReq
                                                Set<Metadata> preserveMeta,
                                                Convert convert,
                                                URL callbackUrl) {
-        super(dev, false, webp, lossy, quality, resize, preserveMeta, convert);
+        super(dev, false, webp, lossy, quality, resize, preserveMeta, convert, false);
 
         checkNotNull(callbackUrl, "callbackUrl must not be null");
         this.callbackUrl = callbackUrl;
