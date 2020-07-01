@@ -40,7 +40,7 @@
         <guava.version>18.0</guava.version>
         <findbugs.version>3.0.0</findbugs.version>
         <slf4j.version>1.7.23</slf4j.version>
-        <log4j2.version>2.5</log4j2.version>
+        <log4j2.version>2.13.3</log4j2.version>
 
         <junit.version>4.12</junit.version>
         <mockserver.version>3.9.17</mockserver.version>
