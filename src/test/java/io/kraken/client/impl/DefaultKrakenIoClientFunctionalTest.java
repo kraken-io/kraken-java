@@ -60,7 +60,7 @@ public class DefaultKrakenIoClientFunctionalTest extends AbstractFunctionalTest 
 
     @Before
     public void setUp() throws Exception {
-        krakenIoClient = new DefaultKrakenIoClient("somekey", "somesecret", "http://localhost:1080");
+        krakenIoClient = new DefaultKrakenIoClient("somekey", "somesecret", "http://localhost:1080", 3000);
     }
 
     @Test

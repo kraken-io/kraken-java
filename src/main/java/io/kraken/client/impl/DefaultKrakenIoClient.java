@@ -71,6 +71,8 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
     private static final String DATA_PART = "data";
     private static final String UPLOAD_PART = "upload";
 
+    private static final int CLIENT_TIMEOUT = 3000;
+
     private final javax.ws.rs.client.Client client;
     private final String apiKey;
     private final String apiSecret;
@@ -78,29 +80,38 @@ public class DefaultKrakenIoClient implements KrakenIoClient {
     private final String imageUrl;
 
     public DefaultKrakenIoClient(String apiKey, String apiSecret) {
-        this(apiKey, apiSecret, DEFAULT_BASE_URL);
+        this(apiKey, apiSecret, DEFAULT_BASE_URL, CLIENT_TIMEOUT);
     }
 
     public DefaultKrakenIoClient(String apiKey, String apiSecret, String baseUrl) {
+        this(apiKey, apiSecret, baseUrl, CLIENT_TIMEOUT);
+    }
+
+    public DefaultKrakenIoClient(String apiKey, String apiSecret, int timeout) {
+        this(apiKey, apiSecret, DEFAULT_BASE_URL, timeout);
+    }
+
+    public DefaultKrakenIoClient(String apiKey, String apiSecret, String baseUrl, int timeout) {
         checkNotNull(apiKey, "apiKey must not be null");
         checkArgument(!apiKey.isEmpty(), "apiKey must not be empty");
         checkNotNull(apiSecret, "apiSecret must not be null");
         checkArgument(!apiSecret.isEmpty(), "apiSecret must not be empty");
         checkNotNull(baseUrl, "baseUrl must not be null");
         checkArgument(!baseUrl.isEmpty(), "baseUrl must not be empty");
+        checkNotNull(timeout, "timeout must not be null");
 
         this.apiKey = apiKey;
         this.apiSecret = apiSecret;
         this.directUploadUrl = MessageFormat.format(DIRECT_UPLOAD_ENDPOINT, baseUrl);
         this.imageUrl = MessageFormat.format(IMAGE_URL_ENDPOINT, baseUrl);
-        this.client = createClient(createObjectMapper());
+        this.client = createClient(createObjectMapper(), timeout);
     }
 
-    private Client createClient(ObjectMapper objectMapper) {
+    private Client createClient(ObjectMapper objectMapper, int timeout) {
         final ClientConfig clientConfig = new ClientConfig();
         clientConfig.property(ClientProperties.FOLLOW_REDIRECTS, true);
-        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, 3000);
-        clientConfig.property(ClientProperties.READ_TIMEOUT, 3000);
+        clientConfig.property(ClientProperties.CONNECT_TIMEOUT, timeout);
+        clientConfig.property(ClientProperties.READ_TIMEOUT, timeout);
         clientConfig.property(ClientProperties.FEATURE_AUTO_DISCOVERY_DISABLE, true);
 
         final JacksonJsonProvider jacksonJsonProvider = new JacksonJsonProvider(objectMapper);
