@@ -19,7 +19,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
-import org.slf4j.bridge.SLF4JBridgeHandler;
 
 import java.util.logging.Level;
 import java.util.logging.LogManager;
@@ -35,8 +34,6 @@ public abstract class AbstractFunctionalTest {
 
     static {
         LogManager.getLogManager().reset();
-        SLF4JBridgeHandler.removeHandlersForRootLogger();
-        SLF4JBridgeHandler.install();
         Logger.getLogger("global").setLevel(Level.FINEST);
     }
 
