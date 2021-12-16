@@ -39,8 +39,6 @@ import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.media.multipart.file.FileDataBodyPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -63,7 +61,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 public class DefaultKrakenIoClient implements KrakenIoClient {
 
     private static final java.util.logging.Logger JERSEY_LOGGER = java.util.logging.Logger.getLogger(DefaultKrakenIoClient.class.getCanonicalName());
-    private static final Logger log = LoggerFactory.getLogger(DefaultKrakenIoClient.class);
 
     private static final String DEFAULT_BASE_URL = "https://api.kraken.io";
     private static final String DIRECT_UPLOAD_ENDPOINT = "{0}/v1/upload";
