@@ -36,7 +36,7 @@
 
         <jersey.version>2.25</jersey.version>
         <!--<jackson.version>2.8.6</jackson.version>-->
-	<jackson.version>2.9.8</jackson.version>
+	<jackson.version>[2.12.6.1]</jackson.version>
         <guava.version>18.0</guava.version>
         <findbugs.version>3.0.0</findbugs.version>
         <slf4j.version>1.7.23</slf4j.version>
@@ -71,7 +71,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>[${jackson.version}]</version>
+            <version>[${jackson.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
