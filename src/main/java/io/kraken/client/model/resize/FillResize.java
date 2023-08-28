@@ -22,7 +22,7 @@ import io.kraken.client.model.RGBA;
 import io.kraken.client.model.Strategy;
 import io.kraken.client.serializer.RGBASerializer;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
