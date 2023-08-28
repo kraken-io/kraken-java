@@ -39,7 +39,7 @@
 	<jackson.version>2.14.3</jackson.version>
         <guava.version>18.0</guava.version>
         <findbugs.version>3.0.0</findbugs.version>
-        <slf4j.version>1.7.23</slf4j.version>
+        <slf4j.version>2.0.7</slf4j.version>
 
         <junit.version>4.12</junit.version>
         <mockserver.version>3.9.17</mockserver.version>
