@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+    branches: [master, 'maintenance/**']
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # Which JDKs can still build for the current target? JDK 20 removed
+  # source/target 7, so this establishes where the wall actually is instead of
+  # assuming it.
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        java: ['8', '11', '17', '21']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+      - run: mvn -B -ntp verify
