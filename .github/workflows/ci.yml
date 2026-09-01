@@ -26,3 +26,35 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
       - run: mvn -B -ntp verify
+
+  # setup-java has no JDK 7, so run one in a container: build the artifact on a
+  # modern JDK, then prove it and its dependencies actually load and run on the
+  # oldest JVM the library claims to support.
+  java7-runtime:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - run: mvn -B -ntp package -DskipTests
+      - run: mvn -B -ntp dependency:copy-dependencies -DoutputDirectory=target/deps -DincludeScope=runtime
+
+      - name: All classes must be Java 7 bytecode
+        run: |
+          cd target/classes
+          bad=0
+          while IFS= read -r f; do
+            major=$(od -An -tu1 -j7 -N1 "$f" | tr -d ' ')
+            if [ "$major" != "51" ]; then echo "$f is major $major, want 51"; bad=1; fi
+          done < <(find . -name '*.class')
+          exit $bad
+
+      - name: Load and run on a real JDK 7
+        run: |
+          docker run --rm -v "$PWD:/src" -w /src openjdk:7u181-jdk sh -c '
+            CP="target/client-*.jar:$(ls target/deps/*.jar | tr "\n" ":")"
+            javac -cp "$CP" -d /tmp src/verify/Smoke.java && java -cp "/tmp:$CP" Smoke
+          '
