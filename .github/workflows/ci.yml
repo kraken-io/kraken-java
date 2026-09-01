@@ -55,6 +55,8 @@ jobs:
       - name: Load and run on a real JDK 7
         run: |
           docker run --rm -v "$PWD:/src" -w /src openjdk:7u181-jdk sh -c '
-            CP="target/client-*.jar:$(ls target/deps/*.jar | tr "\n" ":")"
-            javac -cp "$CP" -d /tmp src/verify/Smoke.java && java -cp "/tmp:$CP" Smoke
+            jar=$(ls target/client-*.jar | grep -v -e sources -e javadoc | head -1)
+            cp="$jar:$(ls target/deps/*.jar | tr "\n" ":")"
+            javac -cp "$cp" -d /tmp src/verify/Smoke.java
+            java -cp "/tmp:$cp" Smoke
           '
