@@ -23,7 +23,7 @@ import io.kraken.client.model.resize.AbstractResize;
 import java.io.InputStream;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic

@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkArgument;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic

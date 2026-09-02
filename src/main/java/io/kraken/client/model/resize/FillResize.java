@@ -24,7 +24,7 @@ import io.kraken.client.serializer.RGBASerializer;
 
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic

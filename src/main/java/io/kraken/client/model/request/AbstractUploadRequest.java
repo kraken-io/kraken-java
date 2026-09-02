@@ -24,8 +24,8 @@ import io.kraken.client.model.resize.AbstractResize;
 import java.util.HashSet;
 import java.util.Set;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkArgument;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic

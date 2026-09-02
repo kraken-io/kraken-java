@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.kraken.client.model.Strategy;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic

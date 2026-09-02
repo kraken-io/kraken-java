@@ -51,8 +51,8 @@ import java.text.MessageFormat;
 import java.util.UUID;
 import java.util.logging.Level;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static io.kraken.client.internal.Preconditions.checkArgument;
+import static io.kraken.client.internal.Preconditions.checkNotNull;
 
 /**
  * @author Emir Dizdarevic
